@@ -1,0 +1,48 @@
+Namespace(arch='resnet50', batch_size=32, bottleneck_dim=256, data='Office31', epochs=20, iters_per_epoch=1000, log='logs/adda/Office31_A2W', lr=0.01, lr_d=0.01, lr_decay=0.75, lr_gamma=0.001, momentum=0.9, no_hflip=False, no_pool=False, norm_mean=(0.485, 0.456, 0.406), norm_std=(0.229, 0.224, 0.225), per_class_eval=False, phase='train', print_freq=100, resize_size=224, root='data/office31', scratch=False, seed=1, source=['A'], target=['W'], trade_off=0.1, train_resizing='default', val_resizing='default', weight_decay=0.001, workers=2)
+adda.py:50: UserWarning: You have chosen to seed training. This will turn on the CUDNN deterministic setting, which can slow down your training considerably! You may see unexpected behavior when restarting from checkpoints.
+  warnings.warn('You have chosen to seed training. '
+train_transform:  Compose(
+    Compose(
+    ResizeImage(size=(256, 256))
+    RandomResizedCrop(size=(224, 224), scale=(0.08, 1.0), ratio=(0.75, 1.3333), interpolation=bilinear)
+)
+    RandomHorizontalFlip(p=0.5)
+    ToTensor()
+    Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+)
+val_transform:  Compose(
+    Compose(
+    ResizeImage(size=(256, 256))
+    CenterCrop(size=(224, 224))
+)
+    ToTensor()
+    Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
+)
+=> using model 'resnet50'
+/home/zw2774/.local/lib/python3.6/site-packages/torch/optim/lr_scheduler.py:247: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  warnings.warn("To get the last learning rate computed by the scheduler, "
+lr classifier: [0.001, 0.01, 0.01]
+lr discriminator: [0.01]
+Epoch: [0][   0/1000]	Time  1.41 ( 1.41)	Data  0.02 ( 0.02)	Cls Loss   3.61 (  3.61)	Transfer Loss   0.69 (  0.69)	Discriminator Loss   0.73 (  0.73)	Cls Acc 3.1 (3.1)	Domain Acc 53.1 (53.1)
+Epoch: [0][ 100/1000]	Time  0.27 ( 0.30)	Data  0.02 ( 0.05)	Cls Loss   0.66 (  1.30)	Transfer Loss   6.00 (  6.33)	Discriminator Loss   0.13 (  0.14)	Cls Acc 78.1 (66.9)	Domain Acc 95.3 (95.0)
+Epoch: [0][ 200/1000]	Time  0.27 ( 0.30)	Data  0.02 ( 0.05)	Cls Loss   0.81 (  0.97)	Transfer Loss   4.69 (  6.25)	Discriminator Loss   0.17 (  0.15)	Cls Acc 75.0 (75.0)	Domain Acc 92.2 (94.5)
+Epoch: [0][ 300/1000]	Time  0.27 ( 0.30)	Data  0.02 ( 0.05)	Cls Loss   0.38 (  0.81)	Transfer Loss   3.02 (  5.40)	Discriminator Loss   0.36 (  0.19)	Cls Acc 87.5 (79.0)	Domain Acc 84.4 (92.6)
+Epoch: [0][ 400/1000]	Time  0.27 ( 0.30)	Data  0.02 ( 0.05)	Cls Loss   0.30 (  0.69)	Transfer Loss   2.42 (  4.80)	Discriminator Loss   0.39 (  0.22)	Cls Acc 93.8 (81.9)	Domain Acc 81.2 (91.1)
+Traceback (most recent call last):
+  File "adda.py", line 297, in <module>
+    parser.add_argument('--per-class-eval', action='store_true',
+  File "adda.py", line 131, in main
+    # train for one epoch
+  File "adda.py", line 211, in train
+    set_requires_grad(model, False)
+  File "/home/zw2774/.local/lib/python3.6/site-packages/torch/optim/lr_scheduler.py", line 65, in wrapper
+    return wrapped(*args, **kwargs)
+  File "/home/zw2774/.local/lib/python3.6/site-packages/torch/optim/optimizer.py", line 88, in wrapper
+    return func(*args, **kwargs)
+  File "/home/zw2774/.local/lib/python3.6/site-packages/torch/autograd/grad_mode.py", line 28, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/zw2774/.local/lib/python3.6/site-packages/torch/optim/sgd.py", line 143, in step
+    nesterov=nesterov)
+  File "/home/zw2774/.local/lib/python3.6/site-packages/torch/optim/_functional.py", line 173, in sgd
+    buf.mul_(momentum).add_(d_p, alpha=1 - dampening)
+KeyboardInterrupt
