@@ -41,6 +41,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def main(args: argparse.Namespace):
     logger = CompleteLogger(args.log, args.phase)
+    start = time.time()
+    print("start training time:", start)
     print(args)
 
     if args.seed is not None:
@@ -145,6 +147,12 @@ def main(args: argparse.Namespace):
     classifier.load_state_dict(torch.load(logger.get_checkpoint_path('best')))
     acc1 = utils.validate(test_loader, classifier, args, device)
     print("test_acc1 = {:3.1f}".format(acc1))
+
+    end = time.time()
+    time_lapse = end - start
+    print("end training time:", end)
+    print("the entire training time is:", time_lapse, "sec")
+    print("the entire training time is: %dh %dm %ds" % (time_lapse//3600, time_lapse%3600//60, time_lapse%60))
 
     logger.close()
 
